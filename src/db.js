@@ -1,10 +1,13 @@
 const mongoose = require('mongoose');
-const { MONGO_URI, MONGO_USER, MONGO_PASS } = require('./config');
+const { MONGO_URI } = require('./config');
 
-mongoose.connect(MONGO_URI)
-    .then(() => {
-        console.log("Connected to MongoDB");
-    })
-    .catch((err) => {
-        console.log(err);
-    });
+mongoose.connect(
+    MONGO_URI,
+    { useNewUrlParser: true, useUnifiedTopology: true }
+)
+.then(() => {
+    console.log('Connection to MongoDB established');
+})
+.catch((error) => {
+    console.error('Error connecting to MongoDB:', error);
+});

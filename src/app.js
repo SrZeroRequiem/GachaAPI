@@ -4,11 +4,10 @@ var usersRouter = require('./routes/users');
 var charactersRouter = require('./routes/characters');
 require("dotenv").config();
 var passport = require("passport");
-require('./db');
+require("./db")
 const expressListEndpoints = require('express-list-endpoints');
 
 var app = express();
-
 app.use(express.json());
 app.use(session({
     secret: 'secret',
