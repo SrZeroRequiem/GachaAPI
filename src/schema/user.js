@@ -30,6 +30,10 @@ const userSchema = new Schema({
         type: String,
         required: true
     },
+    favoriteCharacter: {
+        type: Object,
+        required: false
+    },
     pityCounter: {
         type: Number,
         required: false,
@@ -38,7 +42,7 @@ const userSchema = new Schema({
     roll: {
         type: Number,
         required: false,
-        default: 0
+        default: 10
     },
     characters: {
         type: Array,

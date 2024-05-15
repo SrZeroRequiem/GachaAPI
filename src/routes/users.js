@@ -51,7 +51,7 @@ router.post('/login', function(req, res, next) {
     return res.status(400).json({message: 'All fields are required'});
   }
 
-  userSchema.findOne({email: email}).then((user) => {
+  userSchema.findOneAndUpdate({email: email}, {lastLogin:Date.now()}).then((user) => {
     if (!user) {
       return res.status(400).json({message: 'User not found'});
     }
@@ -74,8 +74,64 @@ router.post('/login', function(req, res, next) {
 
 /* POST Verify token. */
 router.post('/verify', verifyToken, function(req, res, next) {
-  res.json({message: 'Token is valid'});
+  res.json({message: 'Token is valid'}).status(200);
 });
+
+/* POST Discord register or login. */
+router.post('/discord', async function(req, res, next) {
+  try {
+    const discordUser = req.body.discordUser;
+    const email = discordUser.email;
+    let user = await userSchema.findOne({ email });
+
+    if (!user) {
+      const token = jwtGenerator(email);
+      const newUser = new userSchema({
+        discordId: discordUser.id,
+        email,
+        username: discordUser.username,
+        avatar: discordUser.avatar,
+        password: token
+      });
+      await newUser.save();
+      res.json({
+        message: 'User created',
+        token,
+        user: {
+          username: discordUser.username,
+          email
+        }
+      });
+    } else {
+      user = await userSchema.findOne({ discordId: discordUser.id });
+      if (!user) {
+        await userSchema.findOneAndUpdate({ email }, { discordId: discordUser.id });
+        res.json({
+          message: 'User linked',
+          token,
+          user: {
+            username: discordUser.username,
+            email
+          }
+        });
+      } else {
+        const token = jwtGenerator(email);
+        await userSchema.findOneAndUpdate({ email }, { lastLogin: Date.now() });
+        res.json({
+          message: 'User logged in',
+          token,
+          user: {
+            username: user.username,
+            email: user.email
+          }
+        });
+      }
+    }
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+});
+
 
 
 
