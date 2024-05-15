@@ -46,6 +46,3 @@ Si deseas contribuir a este proyecto, sigue estos pasos:
 
 Este proyecto fue creado por [Bruno](https://github.com/SrZeroRequiem).
 
-## Licencia
-
-Este proyecto está bajo la Licencia MIT. Consulta el archivo `LICENSE` para más detalles.
