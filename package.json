@@ -1,24 +1,16 @@
 {
   "name": "gachaapi",
-  "version": "1.0.0",
-  "description": "",
-  "main": "app.js",
+  "version": "0.0.0",
+  "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon src/app.js"
+    "start": "node ./bin/www"
   },
-  "author": "",
-  "license": "ISC",
   "dependencies": {
-    "dotenv": "^16.4.5",
-    "express": "^4.19.2",
-    "express-list-endpoints": "^7.1.0",
-    "express-session": "^1.18.0",
-    "jade": "^0.29.0",
-    "jsonwebtoken": "^9.0.2",
-    "mongoose": "^8.3.1",
-    "passport": "^0.7.0",
-    "passport-discord": "^0.1.4",
-    "uuid": "^9.0.1"
+    "cookie-parser": "~1.4.4",
+    "debug": "~2.6.9",
+    "express": "~4.16.1",
+    "http-errors": "~1.6.3",
+    "jade": "~1.11.0",
+    "morgan": "~1.9.1"
   }
 }
